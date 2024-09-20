@@ -27,8 +27,9 @@ app.listen(port, () => {
 const wss = new WebSocket.Server({ port: 3001, paht: "/ws" });
 
 // WebSocket event handling
-wss.on('connection', (ws) => {
-  console.log('A new client connected.');
+wss.on('connection', (ws, req) => {
+  const connected_ip = req.socket.remoteAddress;  // Get the client's IP address
+  console.log(`Client connected from IP: ${ip}`);
 
   // Event listener for incoming messages
   ws.on('message', (message) => {
@@ -43,7 +44,12 @@ wss.on('connection', (ws) => {
   });
 
   // Event listener for client disconnection
-  ws.on('close', () => {
-    console.log('A client disconnected.');
+  ws.on('close', (code, reason) => {
+    console.log(`A client ${connected_ip} disconnected. Code: ${code}, Reason: ${reason}`);
   });
+
+    ws.on('error', (error) => {
+      console.log('WebSocket error: ', error);
+  });
+
 });
