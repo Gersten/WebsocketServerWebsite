@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouse Overview</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #1e1e1e;
+          color: #ffffff;
+          text-align: center;
+          padding: 20px;
+      }
+      h1 {
+          color: #068f38;
+      }
+      pre {
+          background-color: #333333;
+          border: 1px solid #444444;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: left;
+          display: inline-block;
+          margin-top: 20px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+          overflow-x: auto;
+      }
+      .category {
+          margin: 10px 0;
+      }
+      .button-container {
+          display: inline-block;
+      }
+      button {
+          margin-right: 10px;
+          padding: 10px;
+          font-size: 14px;
+          cursor: pointer;
+      }
+      .start {
+          background-color: #4CAF50;
+          color: white;
+      }
+      .stop {
+          background-color: #f44336;
+          color: white;
+      }
+      .categories-row {
+          display: flex;
+          justify-content: center;
+          gap: 50px;
+      }
+  </style>
+</head>
+<body>
+    <h1>Greenhouse 1</h1>
+    <pre id='jsonData1'>Loading...</pre>
+    <pre id='jsonData1Bath'>Loading...</pre>
+    
+    <script>
+        var ws;
+        var arduinoBoardConnection = {};
+
+        function initWebSocket() {
+            ws = new WebSocket('ws://192.168.1.15:80/ws');
+            // ws = new WebSocket('ws://%ADDRESS_VARIABLE%:12349/ws');
+            ws.onopen = function() {
+                console.log('WebSocket connection opened');
+                //identify as website
+                var message = JSON.stringify({ Type:"Website" });
+                ws.send(message);
+            };
+            ws.onmessage = function(event) {
+                // Display data received from WebSocket
+                console.log(event.data);
+                var data = JSON.parse(event.data);
+                //store all connected boards in obj, we need it to send to a specific bath
+                arduinoBoardConnection[data.Connection] = data;
+                if (data.Greenhouse === '1' && data.Type === 'Temperature') {
+                    document.getElementById('jsonData1').textContent = JSON.stringify(data.Sensors, null, 2);
+                }
+                if (data.Greenhouse === '1' && data.Type === 'Bath' && data.Bath === '1') {
+                    document.getElementById('jsonData1Bath').textContent = JSON.stringify(data.Sensors, null, 2);
+                }
+            };
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+            };
+        }
+        
+        function sendMessage(_action) {
+            var message = JSON.stringify({ Type:"Control", Action: _action });
+            console.log('WebSocket message send: ' + message);
+            ws.send(message);
+        }
+
+        function findSpecificArduinoBoard(_greenhouse, _bath) {
+          for (const key in arduinoBoardConnection) {
+            if (arduinoBoardConnection[key].Type !== 'Bath') continue;
+            if (arduinoBoardConnection[key].Greenhouse === _greenhouse && arduinoBoardConnection[key].Bath === _bath) {
+              console.log(`Found match at key ${key}:`, arduinoBoardConnection[key].Connection);
+              return key; //key is also the Connection
+            }
+          }
+        }
+
+        function sendRequest(_greenhouse, _bath, _action) {
+          var _url = findSpecificArduinoBoard(_greenhouse, _bath);
+          fetch(`http://${_url}/Greenhouse${_greenhouse}/Bath${_bath}/${_action}`).then(response => response.text()).then(data => {
+              console.log(_url + ": " + data);
+          }).catch(error => {
+              console.log('Failed to load data: ' + error);
+          });
+        }
+
+        initWebSocket();
+
+    </script>
+
+    <div class="categories-row">
+      <!-- Category 1 -->
+      <div class="category">
+          <h2>Bath 1</h2>
+          <div class="button-container">
+            <button class="start" onclick="sendRequest('1', '1', 'startMotor')">Start</button>
+            <button class="stop" onclick="sendRequest('1', '1', 'stopMotor')">Stop</button>
+          </div>
+      </div>
+
+      <!-- Category 2 -->
+      <div class="category">
+          <h2>Bath 2</h2>
+          <div class="button-container">
+              <button class="start" onclick="sendRequest('category2', 'start')">Start</button>
+              <button class="stop" onclick="sendRequest('category2', 'stop')">Stop</button>
+          </div>
+      </div>
+    </div>
+
+    <div class="categories-row">
+      <div class="category">
+          <h2>Shading</h2>
+          <div class="button-container">
+            <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button>
+            <button class="stop" onclick="sendMessage('close_shading')">Close</button>
+          </div>
+      </div>
+
+      <div class="category">
+          <h2>Bath 2</h2>
+          <div class="button-container">
+              <button class="start" onclick="sendRequest('category2', 'start')">Start</button>
+              <button class="stop" onclick="sendRequest('category2', 'stop')">Stop</button>
+          </div>
+      </div>
+    </div>
+
+    <h1>Greenhouse 2</h1>
+    <pre id="jsonData2">01.01.2028...</pre>
+
+    <h1>Greenhouse 3</h1>
+    <pre id="jsonData3">really?!...</pre>
+
+</body>
+</html>
