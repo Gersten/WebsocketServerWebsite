@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const http = require('http');
+// const http = require('http');
 const WebSocket = require('ws');
 
 const app = express();
@@ -23,37 +23,27 @@ app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
-// Create an HTTP server
-const server = http.createServer(app);
+// Initialize WebSocket server
+const wss = new WebSocket.Server({ port: 3001, paht: "/ws" });
 
-// Initialize the WebSocket server instance
-const wss = new WebSocket.Server({ server });
-
-// WebSocket connection handler
+// WebSocket event handling
 wss.on('connection', (ws) => {
-  console.log('New client connected');
+  console.log('A new client connected.');
 
-  // Send a message to the client upon connection
-  ws.send('Welcome to the WebSocket server!');
-
-  // Receive messages from the client
+  // Event listener for incoming messages
   ws.on('message', (message) => {
-    console.log('Received: %s', message);
-    // Broadcast the message to all clients
-    wss.clients.forEach(client => {
+    console.log('Received message:', message.toString());
+
+    // Broadcast the message to all connected clients
+    wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(`Server broadcast: ${message}`);
+        client.send(message.toString());
       }
     });
   });
 
-  // Handle WebSocket client disconnect
+  // Event listener for client disconnection
   ws.on('close', () => {
-    console.log('Client disconnected');
+    console.log('A client disconnected.');
   });
-});
-
-// Start the server
-server.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
 });
