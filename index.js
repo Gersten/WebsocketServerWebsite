@@ -29,7 +29,7 @@ const wss = new WebSocket.Server({ port: 3001, paht: "/ws" });
 // WebSocket event handling
 wss.on('connection', (ws, req) => {
   const connected_ip = req.socket.remoteAddress;  // Get the client's IP address
-  console.log(`Client connected from IP: ${ip}`);
+  console.log(`Client connected from IP: ${connected_ip}`);
 
   // Event listener for incoming messages
   ws.on('message', (message) => {
