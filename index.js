@@ -4,7 +4,7 @@ const http = require('http');
 const WebSocket = require('ws');
 
 const app = express();
-const port = 80;
+const port = 3002;
 
 // app.get('/', (req, res) => {
 //   res.send('Hello World Bye !!!');
