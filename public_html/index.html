@@ -4,58 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greenhouse Overview</title>
-  <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #1e1e1e;
-          color: #ffffff;
-          text-align: center;
-          padding: 20px;
-      }
-      h1 {
-          color: #068f38;
-      }
-      pre {
-          background-color: #333333;
-          border: 1px solid #444444;
-          padding: 10px;
-          border-radius: 5px;
-          text-align: left;
-          display: inline-block;
-          margin-top: 20px;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-          overflow-x: auto;
-      }
-      .category {
-          margin: 5px 0;
-      }
-      .button-container {
-          display: inline-block;
-      }
-      button {
-          margin-right: 10px;
-          padding: 10px;
-          font-size: 15px;
-          cursor: pointer;
-      }
-      .start {
-          width: 70px;        /* Set a fixed width */
-          height: 40px;        /* Set a fixed height */
-          background-color: #4CAF50;
-          color: white;
-      }
-      .stop {
-          width: 70px;        /* Set a fixed width */
-          height: 40px;        /* Set a fixed height */
-          background-color: #f44336;
-          color: white;
-      }
-      .categories-row {
-          display: flex;
-          justify-content: center;
-          gap: 25px;
-      }
-  </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #068f38;
+        }
+        pre {
+            background-color: #333333;
+            border: 1px solid #444444;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            overflow-x: auto;
+        }
+        .category {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            margin: 10px;
+        }
+        .button-container {
+            margin: 10px 0;
+        }
+        button {
+            margin-right: 10px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .start {
+            width: 70px;
+            height: 40px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .stop {
+            width: 70px;
+            height: 40px;
+            background-color: #f44336;
+            color: white;
+        }
+        .categories-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        /* Style for the input fields */
+        .input-fields {
+            display: flex;
+            flex-direction: column; /* Stack fields vertically */
+            align-items: center; /* Center horizontally */
+            margin-top: 10px; /* Space above the input fields */
+        }
+
+        .input-fields label {
+            display: block; /* Ensure labels are block elements to stack */
+            margin-bottom: 5px; /* Space between label and input */
+        }
+
+        .input-fields input {
+            margin-bottom: 10px; /* Space between inputs */
+            padding: 8px; /* Padding for inputs */
+            border: 1px solid #444444; /* Border style */
+            border-radius: 4px; /* Rounded corners */
+        }
+        label {
+            color: #ffffff;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        input[type="time"] {
+            background-color: #333333;
+            color: white;
+            border: 1px solid #444444;
+            padding: 5px;
+            border-radius: 5px;
+            width: 100px;
+            text-align: center;
+        }
+        /* Additional styling for better appearance */
+        .category h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body>
     <h1>Greenhouse 1</h1>
@@ -122,92 +171,229 @@
         //   });
         // }
 
+                    // Example JSON object (you might fetch this from a server in a real application)
+        const settings = {
+            bath1: {
+                runTime: 30,
+                pauseTime: 10
+            },
+            bath2: {
+                runTime: 25,
+                pauseTime: 15
+            },
+            bath3: {
+                runTime: 20,
+                pauseTime: 5
+            },
+            bath4: {
+                runTime: 35,
+                pauseTime: 20
+            },
+            temperatureFan: {
+                minTime: 10,
+                maxTime: 60
+            },
+            lightGrow: {
+                onTime: 20,
+                offTime: 30
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate the input fields with the JSON values
+            // Add input event listeners to update the JSON object when values change
+            document.getElementById('bath1RunTime').value = settings.bath1.runTime;
+            document.getElementById('bath1RunTime').addEventListener('input', (event) => {
+                settings.bath1.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath1PauseTime').value = settings.bath1.pauseTime;
+            document.getElementById('bath1PauseTime').addEventListener('input', (event) => {
+                settings.bath1.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            // Repeat for other baths and settings
+            document.getElementById('bath2RunTime').value = settings.bath2.runTime;
+            document.getElementById('bath2RunTime').addEventListener('input', (event) => {
+                settings.bath2.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath2PauseTime').value = settings.bath2.pauseTime;
+            document.getElementById('bath2PauseTime').addEventListener('input', (event) => {
+                settings.bath2.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath3RunTime').value = settings.bath3.runTime;
+            document.getElementById('bath3RunTime').addEventListener('input', (event) => {
+                settings.bath3.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath3PauseTime').value = settings.bath3.pauseTime;
+            document.getElementById('bath3PauseTime').addEventListener('input', (event) => {
+                settings.bath3.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath4RunTime').value = settings.bath4.runTime;
+            document.getElementById('bath4RunTime').addEventListener('input', (event) => {
+                settings.bath4.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('bath4PauseTime').value = settings.bath4.pauseTime;
+            document.getElementById('bath4PauseTime').addEventListener('input', (event) => {
+                settings.bath4.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('temperatureFanMinTemp').value = settings.temperatureFan.minTime;
+            document.getElementById('temperatureFanMinTemp').addEventListener('input', (event) => {
+                settings.temperatureFan.minTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('temperatureFanMaxTemp').value = settings.temperatureFan.maxTime;
+            document.getElementById('temperatureFanMaxTemp').addEventListener('input', (event) => {
+                settings.temperatureFan.maxTime = Number(event.target.value);
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('lightGrowOnTime').value = settings.lightGrow.onTime;
+            document.getElementById('lightGrowOnTime').addEventListener('change', (event) => {
+                settings.lightGrow.onTime = event.target.value;
+                console.log('Updated settings:', settings);
+            });
+
+            document.getElementById('lightGrowOffTime').value = settings.lightGrow.offTime;
+            document.getElementById('lightGrowOffTime').addEventListener('change', (event) => {
+                settings.lightGrow.offTime = event.target.value;
+                // console.log('Updated lightGrow.offTime:', settings.lightGrow.offTime);
+                console.log('Updated settings:', settings);
+            });
+
+            console.log(settings);
+        });
+
         initWebSocket();
 
     </script>
 
-    <div class="categories-row">
-        <!-- Category 1 -->
-        <div class="category">
-            <h2>Bath 1</h2>
-            <div class="button-container">
-                <button class="start" onclick="sendMessage('Control', '1', '1', 'start_motor')">Start</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '1', 'stop_motor')">Stop</button>
-            </div>
+<div class="categories-row">
+    <!-- Category 1 -->
+    <div class="category">
+        <h2>Bath 1</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '1', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '1', 'stop_motor')">Stop</button>
         </div>
-
-        <!-- Category 2 -->
-        <div class="category">
-            <h2>Bath 2</h2>
-            <div class="button-container">
-                <button class="start" onclick="sendMessage('Control', '1', '2', 'start_motor')">Start</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '2', 'stop_motor')">Stop</button>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2>Bath 3</h2>
-            <div class="button-container">
-                <button class="start" onclick="sendMessage('Control', '1', '3', 'start_motor')">Start</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '3', 'stop_motor')">Stop</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="categories-row">
-        <div class="category">
-            <h2>Bath 4</h2>
-            <div class="button-container">
-                <button class="start" onclick="sendMessage('Control', '1', '4', 'start_motor')">Start</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '4', 'stop_motor')">Stop</button>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2>Shading</h2>
-            <div class="button-container">
-                <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
-                <button class="start" onclick="sendMessage('Control', '1', '-1', 'open_shading')">Open</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shading')">Close</button>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2>Cooling Wall</h2>
-            <div class="button-container">
-                <button class="start" onclick="sendMessage('Control', '1', '-1', 'cool_wall_on')">On</button>
-                <button class="stop" onclick="sendMessage('Control', '1', '-1', 'cool_wall_off')">Off</button>
-            </div>
+        <div class="input-fields">
+            <label for="bath1RunTime">Run Time:</label>
+            <input type="number" id="bath1RunTime" placeholder="Minutes" min="0">
+            <label for="bath1PauseTime">Pause Time:</label>
+            <input type="number" id="bath1PauseTime" placeholder="Minutes" min="0">
         </div>
     </div>
 
-    <div class="categories-row">
-            <div class="category">
-                <h2>Fan</h2>
-                <div class="button-container">
-                    <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
-                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'start_fan')">Start</button>
-                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'stop_fan')">Stop</button>
-                </div>
-            </div>
+    <!-- Category 2 -->
+    <div class="category">
+        <h2>Bath 2</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '2', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '2', 'stop_motor')">Stop</button>
+        </div>
+        <div class="input-fields">
+            <label for="bath2RunTime">Run Time:</label>
+            <input type="number" id="bath2RunTime" placeholder="Minutes" min="0">
+            <label for="bath2PauseTime">Pause Time:</label>
+            <input type="number" id="bath2PauseTime" placeholder="Minutes" min="0">
+        </div>
+    </div>
+
+    <!-- Category 3 -->
+    <div class="category">
+        <h2>Bath 3</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '3', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '3', 'stop_motor')">Stop</button>
+        </div>
+        <div class="input-fields">
+            <label for="bath3RunTime">Run Time:</label>
+            <input type="number" id="bath3RunTime" placeholder="Minutes" min="0">
+            <label for="bath3PauseTime">Pause Time:</label>
+            <input type="number" id="bath3PauseTime" placeholder="Minutes" min="0">
+        </div>
+    </div>
+
+    <!-- Category 4 -->
+    <div class="category">
+        <h2>Bath 4</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '4', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '4', 'stop_motor')">Stop</button>
+        </div>
+        <div class="input-fields">
+            <label for="bath4RunTime">Run Time:</label>
+            <input type="number" id="bath4RunTime" placeholder="Minutes" min="0">
+            <label for="bath4PauseTime">Pause Time:</label>
+            <input type="number" id="bath4PauseTime" placeholder="Minutes" min="0">
+        </div>
+    </div>
     
-            <div class="category">
-                <h2>Light</h2>
-                <div class="button-container">
-                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_on')">On</button>
-                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_off')">Off</button>
-                </div>
-            </div>
+    <div class="category">
+        <h2>Shading</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '-1', 'open_shade')">Open</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shade')">Close</button>
+        </div>
+    </div>
 
-            <div class="category">
-                <h2>Light Grow</h2>
-                <div class="button-container">
-                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_grow_on')">On</button>
-                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_grow_off')">Off</button>
-                </div>
-            </div>
-      </div>
+    <div class="category">
+        <h2>Light</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_on')">On</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_off')">Off</button>
+        </div>
+    </div>
+
+    <!-- Temperature Fan Settings -->
+    <div class="category">
+        <h2>Temperature Fan</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '-1', 'start_fan')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '-1', 'stop_fan')">Stop</button>
+        </div>
+        <div class="input-fields">
+            <label for="temperatureFanMinTemp">Minimum Temp:</label>
+            <input type="number" id="temperatureFanMinTemp" placeholder="Minutes" min="0">
+        </div>
+        <div class="input-fields">
+            <label for="temperatureFanMaxTemp">Maximum Temp:</label>
+            <input type="number" id="temperatureFanMaxTemp" placeholder="Minutes" min="0">
+        </div>
+    </div>
+
+    <!-- Light Grow Fan Settings -->
+    <div class="category">
+        <h2>Light Grow</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_grow_on')">On</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_grow_off')">Off</button>
+        </div>
+        <div class="input-fields">
+            <label for="lightGrowOnTime">On Time:</label>
+            <input type="time" id="lightGrowOnTime" placeholder="Minutes" min="0">
+        </div>
+        <div class="input-fields">
+            <label for="lightGrowOffTime">Off Time:</label>
+            <input type="time" id="lightGrowOffTime" placeholder="Minutes" min="0">
+        </div>
+    </div>
+</div>
 
     <h1>Greenhouse 2</h1>
     <pre id="jsonData2">01.01.2028...</pre>
