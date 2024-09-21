@@ -166,10 +166,19 @@
         
         function sendMessage(_type, _greenhouse, _bath, _action) {
             if(!checkConnectionState()) return;
+
             var message = {};
             message = JSON.stringify({ Greenhouse: _greenhouse, Bath: _bath, Type: _type, Action: _action });
             console.log('WebSocket message send: ' + message);
             ws.send(message);
+        }
+
+        function sendSettings() {
+            if(!checkConnectionState()) return;
+
+            var _settings = JSON.stringify(settings, 2);
+            console.log('WebSocket settings send: ' + _settings);
+            ws.send(_settings);
         }
 
         // function findSpecificArduinoBoard(_greenhouse, _bath) {
@@ -297,12 +306,8 @@
             });
 
             console.log(settings);
-
-            if(!checkConnectionState()) return;
+            sendSettings();
             
-            settings = JSON.stringify(settings, 2);
-            console.log('WebSocket message send: ' + settings);
-            ws.send(settings);
         });
 
         initWebSocket();
