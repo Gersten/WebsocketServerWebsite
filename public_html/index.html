@@ -113,18 +113,20 @@
     
     <script>
         var ws;
+        var _updateFieldsValue = true;
         // var arduinoBoardConnection = {};
 
         function initWebSocket() {
             // ws = new WebSocket('ws://192.168.1.15:80/ws'); //arduino esp 
             ws = new WebSocket('ws://192.168.1.20:3001/ws'); //nodejse
             // ws = new WebSocket('ws://127.0.0.1:3001/ws'); //nodejse windows pc testing
-            // ws = new WebSocket('ws://%ADDRESS_VARIABLE%:12349/ws');
             ws.onopen = function() {
                 console.log('WebSocket connection opened');
                 //identify as website
                 var message = JSON.stringify({ Type:"Website" });
                 ws.send(message);
+
+                readSettings();
             };
             ws.onmessage = function(event) {
                 // Display data received from WebSocket
@@ -132,7 +134,13 @@
                 var data = JSON.parse(event.data);
                 //store all connected boards in obj, we need it to send to a specific bath
                 // arduinoBoardConnection[data.Connection] = data;
-
+                if (data.Type === 'Settings') {
+                    if(_updateFieldsValue){ //we want it to update the fields on the website only once !!! otherwise overload.
+                        _updateFieldsValue = false;
+                        settings = data;
+                        updateFieldsValues();
+                    }
+                }
                 if (data.Greenhouse === '1' && data.Type === 'Temperature') {
                     document.getElementById('jsonData1').textContent = JSON.stringify(data.Sensors, null, 2);
                 }
@@ -152,6 +160,7 @@
                     return false;
                 case WebSocket.OPEN:
                     console.log('WebSocket is open and ready to communicate.');
+                    connected = true;
                     return true;
                 case WebSocket.CLOSING:
                     console.log('WebSocket is closing...');
@@ -162,6 +171,7 @@
                 default:
                     console.log('Unknown WebSocket state.');
             }
+            connected = false;
         }
         
         function sendMessage(_type, _greenhouse, _bath, _action) {
@@ -176,7 +186,19 @@
         function sendSettings() {
             if(!checkConnectionState()) return;
 
-            var _settings = JSON.stringify(settings, 2);
+            settings.Action = "write";
+
+            var _settings = JSON.stringify(settings);
+            console.log('WebSocket settings send: ' + _settings);
+            ws.send(_settings);
+
+            settings.Action = "";
+        }
+
+        function readSettings() {
+            if(!checkConnectionState()) return;
+            var _settings = JSON.stringify({Type: "Settings", Action: "read"});
+
             console.log('WebSocket settings send: ' + _settings);
             ws.send(_settings);
         }
@@ -202,45 +224,50 @@
 
                     // Example JSON object (you might fetch this from a server in a real application)
         var settings = {
-            bath1: {
-                runTime: 30,
-                pauseTime: 10
-            },
-            bath2: {
-                runTime: 25,
-                pauseTime: 15
-            },
-            bath3: {
-                runTime: 20,
-                pauseTime: 5
-            },
-            bath4: {
-                runTime: 35,
-                pauseTime: 20
-            },
-            temperatureFan: {
-                minTime: 10,
-                maxTime: 60
-            },
-            lightGrow: {
-                onTime: "20:00",
-                offTime: "06:00"
-            }
+            Type: "Settings",
+            Action: "",
+            // bath1: {
+            //     runTime: 0,
+            //     pauseTime: 0
+            // },
+            // bath2: {
+            //     runTime: 0,
+            //     pauseTime: 0
+            // },
+            // bath3: {
+            //     runTime: 0,
+            //     pauseTime: 0
+            // },
+            // bath4: {
+            //     runTime: 0,
+            //     pauseTime: 0
+            // },
+            // temperatureFan: {
+            //     minTime: 0,
+            //     maxTime: 0
+            // },
+            // lightGrow: {
+            //     onTime: "00:00",
+            //     offTime: "00:00"
+            // }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Populate the input fields with the JSON values
+        function updateFieldsValues() {
+            console.log('Load Fields Values');
+
             // Add input event listeners to update the JSON object when values change
             document.getElementById('bath1RunTime').value = settings.bath1.runTime;
             document.getElementById('bath1RunTime').addEventListener('input', (event) => {
                 settings.bath1.runTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath1PauseTime').value = settings.bath1.pauseTime;
             document.getElementById('bath1PauseTime').addEventListener('input', (event) => {
                 settings.bath1.pauseTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             // Repeat for other baths and settings
@@ -248,54 +275,63 @@
             document.getElementById('bath2RunTime').addEventListener('input', (event) => {
                 settings.bath2.runTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath2PauseTime').value = settings.bath2.pauseTime;
             document.getElementById('bath2PauseTime').addEventListener('input', (event) => {
                 settings.bath2.pauseTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath3RunTime').value = settings.bath3.runTime;
             document.getElementById('bath3RunTime').addEventListener('input', (event) => {
                 settings.bath3.runTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath3PauseTime').value = settings.bath3.pauseTime;
             document.getElementById('bath3PauseTime').addEventListener('input', (event) => {
                 settings.bath3.pauseTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath4RunTime').value = settings.bath4.runTime;
             document.getElementById('bath4RunTime').addEventListener('input', (event) => {
                 settings.bath4.runTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('bath4PauseTime').value = settings.bath4.pauseTime;
             document.getElementById('bath4PauseTime').addEventListener('input', (event) => {
                 settings.bath4.pauseTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('temperatureFanMinTemp').value = settings.temperatureFan.minTime;
             document.getElementById('temperatureFanMinTemp').addEventListener('input', (event) => {
                 settings.temperatureFan.minTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('temperatureFanMaxTemp').value = settings.temperatureFan.maxTime;
             document.getElementById('temperatureFanMaxTemp').addEventListener('input', (event) => {
                 settings.temperatureFan.maxTime = Number(event.target.value);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('lightGrowOnTime').value = settings.lightGrow.onTime;
             document.getElementById('lightGrowOnTime').addEventListener('change', (event) => {
                 settings.lightGrow.onTime = event.target.value;
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
             document.getElementById('lightGrowOffTime').value = settings.lightGrow.offTime;
@@ -303,14 +339,17 @@
                 settings.lightGrow.offTime = event.target.value;
                 // console.log('Updated lightGrow.offTime:', settings.lightGrow.offTime);
                 console.log('Updated settings:', settings);
+                sendSettings();
             });
 
-            console.log(settings);
-            sendSettings();
-            
-        });
+        }
 
-        initWebSocket();
+        document.addEventListener('DOMContentLoaded', () => {
+
+            initWebSocket();
+
+            console.log(settings);
+        });
 
     </script>
 

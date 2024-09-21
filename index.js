@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
 // const http = require('http');
-const fs = require('fs');
+
+// const fs = require('fs');
+const fs = require('fs/promises'); // Use the promises version of fs
+
 const WebSocket = require('ws');
 
 // const helper = require('./helper');  // Import helper.js
@@ -57,33 +60,34 @@ wss.on('connection', async (ws, req) => {
   ws.on('message', async (message) => {
     console.log('Received message:', message.toString());
 
-    if (message.includes("Settings")) {
-      try {
-        var dataJson = JSON.parse(message);
-        if(dataJson){
-            if(dataJson["Action"] === "read") {
-              var readFile = await fs.readFile('./settings.json', 'utf8');
-              client.send(JSON.stringify(readFile, null, 2));
-            }
-            if(dataJson["Action"] === "write") {
-              var jsonString = JSON.stringify(dataJson, null, 2); // `null, 2` formats the JSON with 2-space indentation
-              // Example of writing the message to a file
-              await fs.writeFile('./settings.json', jsonString);
-            }
-            console.log('Settings saved to file.');
-        }
-      } catch (error) {
-        console.error('Error writing to file:', error);
+    try {
+      var dataJson = JSON.parse(message);
+      if (dataJson["Type"] == "Settings") {
+          if (dataJson) {
+              if (dataJson["Action"] === "read") {
+                  // Read settings from file
+                  var readFileData = await fs.readFile('./settings.json', 'utf-8'); // Add 'utf-8' to get the file content as a string
+                  // client.send(readFile); // Send the file content directly
+                  message = readFileData
+              }
+              if (dataJson["Action"] === "write") {
+                  var jsonString = JSON.stringify(dataJson, null, 2); // Format the JSON
+                  // Write the message to a file
+                  await fs.writeFile('./settings.json', jsonString);
+                  console.log('Settings saved to file.');
+              }
+          }
       }
-
-    } else {
-      // Broadcast the message to all connected clients
-      wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(message.toString());
-        }
-      });
+    } catch (error) {
+        console.error('Error writing to file:', error);
     }
+
+    // Broadcast the message to all connected clients
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message.toString());
+      }
+    });
   });
 
   // Event listener for client disconnection
