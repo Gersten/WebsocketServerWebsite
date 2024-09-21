@@ -194,8 +194,8 @@
                 maxTime: 60
             },
             lightGrow: {
-                onTime: 20,
-                offTime: 30
+                onTime: "20:00",
+                offTime: "06:00"
             }
         };
 
@@ -277,6 +277,10 @@
             });
 
             console.log(settings);
+            
+            settings = JSON.stringify(settings, 2);
+            console.log('WebSocket message send: ' + settings);
+            ws.send(settings);
         });
 
         initWebSocket();
