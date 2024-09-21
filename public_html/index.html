@@ -91,30 +91,31 @@
             };
         }
         
-        function sendMessage(_action) {
-            var message = JSON.stringify({ Type:"Control", Action: _action });
+        function sendMessage(_type, _greenhouse, _bath, _action) {
+            var message = {};
+            message = JSON.stringify({ Greenhouse: _greenhouse, Bath: _bath, Type: _type, Action: _action });
             console.log('WebSocket message send: ' + message);
             ws.send(message);
         }
 
-        function findSpecificArduinoBoard(_greenhouse, _bath) {
-          for (const key in arduinoBoardConnection) {
-            if (arduinoBoardConnection[key].Type !== 'Bath') continue;
-            if (arduinoBoardConnection[key].Greenhouse === _greenhouse && arduinoBoardConnection[key].Bath === _bath) {
-              console.log(`Found match at key ${key}:`, arduinoBoardConnection[key].Connection);
-              return key; //key is also the Connection
-            }
-          }
-        }
+        // function findSpecificArduinoBoard(_greenhouse, _bath) {
+        //   for (const key in arduinoBoardConnection) {
+        //     if (arduinoBoardConnection[key].Type !== 'Bath') continue;
+        //     if (arduinoBoardConnection[key].Greenhouse === _greenhouse && arduinoBoardConnection[key].Bath === _bath) {
+        //       console.log(`Found match at key ${key}:`, arduinoBoardConnection[key].Connection);
+        //       return key; //key is also the Connection
+        //     }
+        //   }
+        // }
 
-        function sendRequest(_greenhouse, _bath, _action) {
-          var _url = findSpecificArduinoBoard(_greenhouse, _bath);
-          fetch(`http://${_url}/Greenhouse${_greenhouse}/Bath${_bath}/${_action}`).then(response => response.text()).then(data => {
-              console.log(_url + ": " + data);
-          }).catch(error => {
-              console.log('Failed to load data: ' + error);
-          });
-        }
+        // function sendRequest(_greenhouse, _bath, _action) {
+        //   var _url = findSpecificArduinoBoard(_greenhouse, _bath);
+        //   fetch(`http://${_url}/Greenhouse${_greenhouse}/Bath${_bath}/${_action}`).then(response => response.text()).then(data => {
+        //       console.log(_url + ": " + data);
+        //   }).catch(error => {
+        //       console.log('Failed to load data: ' + error);
+        //   });
+        // }
 
         initWebSocket();
 
@@ -125,8 +126,8 @@
       <div class="category">
           <h2>Bath 1</h2>
           <div class="button-container">
-            <button class="start" onclick="sendRequest('1', '1', 'startMotor')">Start</button>
-            <button class="stop" onclick="sendRequest('1', '1', 'stopMotor')">Stop</button>
+            <button class="start" onclick="sendMessage('Control', '1', '1', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '1', 'stop_motor')">Stop</button>
           </div>
       </div>
 
@@ -134,8 +135,8 @@
       <div class="category">
           <h2>Bath 2</h2>
           <div class="button-container">
-              <button class="start" onclick="sendRequest('category2', 'start')">Start</button>
-              <button class="stop" onclick="sendRequest('category2', 'stop')">Stop</button>
+            <button class="start" onclick="sendMessage('Control', '1', '2', 'start_motor')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '2', 'stop_motor')">Stop</button>
           </div>
       </div>
     </div>
@@ -144,16 +145,17 @@
       <div class="category">
           <h2>Shading</h2>
           <div class="button-container">
-            <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button>
-            <button class="stop" onclick="sendMessage('close_shading')">Close</button>
+            <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
+            <button class="start" onclick="sendMessage('Control', '1', null, 'open_shading')">Open</button>
+            <button class="stop" onclick="sendMessage('Control', '1', null, 'close_shading')">Close</button>
           </div>
       </div>
 
       <div class="category">
-          <h2>Bath 2</h2>
+          <h2>Cooling Wall 2</h2>
           <div class="button-container">
-              <button class="start" onclick="sendRequest('category2', 'start')">Start</button>
-              <button class="stop" onclick="sendRequest('category2', 'stop')">Stop</button>
+            <button class="start" onclick="sendMessage('Control', '1', null, 'cool_wall_on')">Open</button>
+            <button class="stop" onclick="sendMessage('Control', '1', null, 'cool_wall_off')">Close</button>
           </div>
       </div>
     </div>
