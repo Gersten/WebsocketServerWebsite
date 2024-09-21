@@ -23,10 +23,14 @@ app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
-// Function to send ping to all clients
+// Store connected clients with their IP address
+const clients = new Map();
+
 function sendPing() {
   wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
+          const ip = clients.get(client);  // Get the stored IP for this client
+          console.log(`# Sending Ping to client at IP: ${ip}`);
           client.ping();  // Send a ping
       }
   });
@@ -42,6 +46,9 @@ const wss = new WebSocket.Server({ port: 3001, paht: "/ws" });
 wss.on('connection', (ws, req) => {
   const connected_ip = req.socket.remoteAddress;  // Get the client's IP address
   console.log(`Client connected from IP: ${connected_ip}`);
+
+  // Store the client along with their IP
+  clients.set(ws, connected_ip);
 
   // Event listener for incoming messages
   ws.on('message', (message) => {
