@@ -23,6 +23,18 @@ app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
+// Function to send ping to all clients
+function sendPing() {
+  wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+          client.ping();  // Send a ping
+      }
+  });
+}
+
+// Start the ping interval
+const pingInterval = setInterval(sendPing, 3000);  // Ping every 3 seconds
+
 // Initialize WebSocket server
 const wss = new WebSocket.Server({ port: 3001, paht: "/ws" });
 
