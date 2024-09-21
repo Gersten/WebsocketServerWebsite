@@ -144,8 +144,28 @@
                 console.log('WebSocket connection closed');
             };
         }
+
+        function checkConnectionState() {
+            switch (ws.readyState) {
+                case WebSocket.CONNECTING:
+                    console.log('WebSocket is connecting...');
+                    return false;
+                case WebSocket.OPEN:
+                    console.log('WebSocket is open and ready to communicate.');
+                    return true;
+                case WebSocket.CLOSING:
+                    console.log('WebSocket is closing...');
+                    return false;
+                case WebSocket.CLOSED:
+                    console.log('WebSocket is closed.');
+                    return false;
+                default:
+                    console.log('Unknown WebSocket state.');
+            }
+        }
         
         function sendMessage(_type, _greenhouse, _bath, _action) {
+            if(!checkConnectionState()) return;
             var message = {};
             message = JSON.stringify({ Greenhouse: _greenhouse, Bath: _bath, Type: _type, Action: _action });
             console.log('WebSocket message send: ' + message);
@@ -277,6 +297,8 @@
             });
 
             console.log(settings);
+
+            if(!checkConnectionState()) return;
             
             settings = JSON.stringify(settings, 2);
             console.log('WebSocket message send: ' + settings);
