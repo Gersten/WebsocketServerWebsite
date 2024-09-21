@@ -27,7 +27,7 @@
           overflow-x: auto;
       }
       .category {
-          margin: 10px 0;
+          margin: 5px 0;
       }
       .button-container {
           display: inline-block;
@@ -35,21 +35,25 @@
       button {
           margin-right: 10px;
           padding: 10px;
-          font-size: 14px;
+          font-size: 15px;
           cursor: pointer;
       }
       .start {
+          width: 70px;        /* Set a fixed width */
+          height: 40px;        /* Set a fixed height */
           background-color: #4CAF50;
           color: white;
       }
       .stop {
+          width: 70px;        /* Set a fixed width */
+          height: 40px;        /* Set a fixed height */
           background-color: #f44336;
           color: white;
       }
       .categories-row {
           display: flex;
           justify-content: center;
-          gap: 50px;
+          gap: 25px;
       }
   </style>
 </head>
@@ -60,7 +64,7 @@
     
     <script>
         var ws;
-        var arduinoBoardConnection = {};
+        // var arduinoBoardConnection = {};
 
         function initWebSocket() {
             // ws = new WebSocket('ws://192.168.1.15:80/ws'); //arduino esp 
@@ -78,7 +82,8 @@
                 console.log(event.data);
                 var data = JSON.parse(event.data);
                 //store all connected boards in obj, we need it to send to a specific bath
-                arduinoBoardConnection[data.Connection] = data;
+                // arduinoBoardConnection[data.Connection] = data;
+
                 if (data.Greenhouse === '1' && data.Type === 'Temperature') {
                     document.getElementById('jsonData1').textContent = JSON.stringify(data.Sensors, null, 2);
                 }
@@ -122,43 +127,87 @@
     </script>
 
     <div class="categories-row">
-      <!-- Category 1 -->
-      <div class="category">
-          <h2>Bath 1</h2>
-          <div class="button-container">
-            <button class="start" onclick="sendMessage('Control', '1', '1', 'start_motor')">Start</button>
-            <button class="stop" onclick="sendMessage('Control', '1', '1', 'stop_motor')">Stop</button>
-          </div>
-      </div>
+        <!-- Category 1 -->
+        <div class="category">
+            <h2>Bath 1</h2>
+            <div class="button-container">
+                <button class="start" onclick="sendMessage('Control', '1', '1', 'start_motor')">Start</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '1', 'stop_motor')">Stop</button>
+            </div>
+        </div>
 
-      <!-- Category 2 -->
-      <div class="category">
-          <h2>Bath 2</h2>
-          <div class="button-container">
-            <button class="start" onclick="sendMessage('Control', '1', '2', 'start_motor')">Start</button>
-            <button class="stop" onclick="sendMessage('Control', '1', '2', 'stop_motor')">Stop</button>
-          </div>
-      </div>
+        <!-- Category 2 -->
+        <div class="category">
+            <h2>Bath 2</h2>
+            <div class="button-container">
+                <button class="start" onclick="sendMessage('Control', '1', '2', 'start_motor')">Start</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '2', 'stop_motor')">Stop</button>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Bath 3</h2>
+            <div class="button-container">
+                <button class="start" onclick="sendMessage('Control', '1', '3', 'start_motor')">Start</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '3', 'stop_motor')">Stop</button>
+            </div>
+        </div>
+
     </div>
 
     <div class="categories-row">
-      <div class="category">
-          <h2>Shading</h2>
-          <div class="button-container">
-            <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
-            <button class="start" onclick="sendMessage('Control', '1', null, 'open_shading')">Open</button>
-            <button class="stop" onclick="sendMessage('Control', '1', null, 'close_shading')">Close</button>
-          </div>
-      </div>
+        <div class="category">
+            <h2>Bath 4</h2>
+            <div class="button-container">
+                <button class="start" onclick="sendMessage('Control', '1', '4', 'start_motor')">Start</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '4', 'stop_motor')">Stop</button>
+            </div>
+        </div>
 
-      <div class="category">
-          <h2>Cooling Wall 2</h2>
-          <div class="button-container">
-            <button class="start" onclick="sendMessage('Control', '1', null, 'cool_wall_on')">Open</button>
-            <button class="stop" onclick="sendMessage('Control', '1', null, 'cool_wall_off')">Close</button>
-          </div>
-      </div>
+        <div class="category">
+            <h2>Shading</h2>
+            <div class="button-container">
+                <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
+                <button class="start" onclick="sendMessage('Control', '1', '-1', 'open_shading')">Open</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shading')">Close</button>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Cooling Wall</h2>
+            <div class="button-container">
+                <button class="start" onclick="sendMessage('Control', '1', '-1', 'cool_wall_on')">On</button>
+                <button class="stop" onclick="sendMessage('Control', '1', '-1', 'cool_wall_off')">Off</button>
+            </div>
+        </div>
     </div>
+
+    <div class="categories-row">
+            <div class="category">
+                <h2>Fan</h2>
+                <div class="button-container">
+                    <!-- <button class="start" onclick="sendMessage('open_shading_123456_123456_123456_123456_123456_1234$')">Open</button> -->
+                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'start_fan')">Start</button>
+                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'stop_fan')">Stop</button>
+                </div>
+            </div>
+    
+            <div class="category">
+                <h2>Light</h2>
+                <div class="button-container">
+                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_on')">On</button>
+                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_off')">Off</button>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2>Light Grow</h2>
+                <div class="button-container">
+                    <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_grow_on')">On</button>
+                    <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_grow_off')">Off</button>
+                </div>
+            </div>
+      </div>
 
     <h1>Greenhouse 2</h1>
     <pre id="jsonData2">01.01.2028...</pre>
