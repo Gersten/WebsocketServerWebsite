@@ -53,31 +53,22 @@ wss.on('connection', async (ws, req) => {
   // Store the client along with their IP
   clients.set(ws, connected_ip);
 
-  // Async example: Reading from a file when client connects
-  try {
-    const fileContent = await fs.readFile('./data/settings.txt', 'utf8');
-    console.log('File content on connection:', fileContent);
-  } catch (error) {
-    console.error('Error reading file:', error);
-  }
-
   // Event listener for incoming messages
   ws.on('message', async (message) => {
     console.log('Received message:', message.toString());
 
     if (message.includes("Settings")) {
       try {
-
         var dataJson = JSON.parse(message);
         if(dataJson){
             if(dataJson["Action"] === "read") {
-              var readFile = await fs.readFile('./settings.txt');
+              var readFile = await fs.readFile('./settings.json', 'utf8');
               client.send(JSON.stringify(readFile, null, 2));
             }
             if(dataJson["Action"] === "write") {
               var jsonString = JSON.stringify(dataJson, null, 2); // `null, 2` formats the JSON with 2-space indentation
               // Example of writing the message to a file
-              await fs.writeFile('./settings.txt', jsonString);  
+              await fs.writeFile('./settings.json', jsonString);
             }
             console.log('Settings saved to file.');
         }
