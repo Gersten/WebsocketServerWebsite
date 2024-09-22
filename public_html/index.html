@@ -106,11 +106,7 @@
         }
     </style>
 </head>
-<body>
-    <h1>Greenhouse 1</h1>
-    <pre id='jsonData1'>Loading...</pre>
-    <pre id='jsonData1Bath'>Loading...</pre>
-    
+<body>    
     <script>
         var ws;
         var _updateFieldsValue = true;
@@ -223,6 +219,7 @@
         // }
 
                     // Example JSON object (you might fetch this from a server in a real application)
+
         var settings = {
             Type: "Settings",
             Action: "",
@@ -353,6 +350,9 @@
 
     </script>
 
+<h1>Greenhouse 1</h1>
+<pre id='jsonData1'>Loading...</pre>
+
 <div class="categories-row">
     <!-- Category 1 -->
     <div class="category">
@@ -367,6 +367,8 @@
             <label for="bath1PauseTime">Pause Time:</label>
             <input type="number" id="bath1PauseTime" placeholder="Minutes" min="0">
         </div>
+        <pre id='jsonData1Bath'>Loading...</pre>
+
     </div>
 
     <!-- Category 2 -->
@@ -382,6 +384,8 @@
             <label for="bath2PauseTime">Pause Time:</label>
             <input type="number" id="bath2PauseTime" placeholder="Minutes" min="0">
         </div>
+        <pre id='jsonData2Bath'>Loading...</pre>
+
     </div>
 
     <!-- Category 3 -->
@@ -397,6 +401,7 @@
             <label for="bath3PauseTime">Pause Time:</label>
             <input type="number" id="bath3PauseTime" placeholder="Minutes" min="0">
         </div>
+        <pre id='jsonData3Bath'>Loading...</pre>
     </div>
 
     <!-- Category 4 -->
@@ -412,6 +417,7 @@
             <label for="bath4PauseTime">Pause Time:</label>
             <input type="number" id="bath4PauseTime" placeholder="Minutes" min="0">
         </div>
+        <pre id='jsonData4Bath'>Loading...</pre>
     </div>
     
     <div class="category">
