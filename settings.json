@@ -1,28 +1,33 @@
 {
   "Type": "Settings",
   "Action": "",
-  "bath1": {
-    "runTime": 5,
-    "pauseTime": 15
+  "Greenhouse1": {
+    "bath1": {
+      "runTime": 5,
+      "pauseTime": 15
+    },
+    "bath2": {
+      "runTime": 5,
+      "pauseTime": 15
+    },
+    "bath3": {
+      "runTime": 5,
+      "pauseTime": 15
+    },
+    "bath4": {
+      "runTime": 5,
+      "pauseTime": 15
+    },
+    "temperatureFan": {
+      "minTime": 25,
+      "maxTime": 30
+    },
+    "lightGrow": {
+      "onTime": "20:00",
+      "offTime": "05:00"
+    }
   },
-  "bath2": {
-    "runTime": 5,
-    "pauseTime": 15
-  },
-  "bath3": {
-    "runTime": 5,
-    "pauseTime": 15
-  },
-  "bath4": {
-    "runTime": 5,
-    "pauseTime": 15
-  },
-  "temperatureFan": {
-    "minTime": 25,
-    "maxTime": 30
-  },
-  "lightGrow": {
-    "onTime": "20:00",
-    "offTime": "05:00"
-  }
+  "Greenhouse2": {},
+  "Greenhouse3": {},
+  "Greenhouse4": {},
 }
