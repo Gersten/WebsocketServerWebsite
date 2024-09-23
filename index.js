@@ -92,7 +92,8 @@ wss.on('connection', async (ws, req) => {
 
   // Event listener for client disconnection
   ws.on('close', (code, reason) => {
-    console.log(`A client ${connected_ip} disconnected. Code: ${code}, Reason: ${reason}`);
+    console.log(`A client ${connected_ip} disconnected. Code: ${code}`);
+    console.log(` #${connected_ip} Reason: ${reason}`);
   });
 
   ws.on('error', (error) => {
