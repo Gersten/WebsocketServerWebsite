@@ -223,7 +223,7 @@
         var settings = {
             Type: "Settings",
             Action: "",
-            Greenhouse_1: {
+            Greenhouse1: {
             // bath1: {
             //     runTime: 0,
             //     pauseTime: 0
@@ -249,98 +249,98 @@
             //     offTime: "00:00"
             // }
             },
-            Greenhouse_2: {},
-            Greenhouse_3: {},
-            Greenhouse_4: {},
+            Greenhouse2: {},
+            Greenhouse3: {},
+            Greenhouse4: {},
         };
 
         function updateFieldsValues() {
             console.log('Load Fields Values');
 
             // Add input event listeners to update the JSON object when values change
-            document.getElementById('bath1RunTime').value = settings.Greenhouse_1.bath1.runTime;
+            document.getElementById('bath1RunTime').value = settings.Greenhouse1.bath1.runTime;
             document.getElementById('bath1RunTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath1.runTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath1.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath1PauseTime').value = settings.Greenhouse_1.bath1.pauseTime;
+            document.getElementById('bath1PauseTime').value = settings.Greenhouse1.bath1.pauseTime;
             document.getElementById('bath1PauseTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath1.pauseTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath1.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
             // Repeat for other baths and settings
-            document.getElementById('bath2RunTime').value = settings.Greenhouse_1.bath2.runTime;
+            document.getElementById('bath2RunTime').value = settings.Greenhouse1.bath2.runTime;
             document.getElementById('bath2RunTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath2.runTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath2.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath2PauseTime').value = settings.Greenhouse_1.bath2.pauseTime;
+            document.getElementById('bath2PauseTime').value = settings.Greenhouse1.bath2.pauseTime;
             document.getElementById('bath2PauseTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath2.pauseTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath2.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath3RunTime').value = settings.Greenhouse_1.bath3.runTime;
+            document.getElementById('bath3RunTime').value = settings.Greenhouse1.bath3.runTime;
             document.getElementById('bath3RunTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath3.runTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath3.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath3PauseTime').value = settings.Greenhouse_1.bath3.pauseTime;
+            document.getElementById('bath3PauseTime').value = settings.Greenhouse1.bath3.pauseTime;
             document.getElementById('bath3PauseTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath3.pauseTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath3.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath4RunTime').value = settings.Greenhouse_1.bath4.runTime;
+            document.getElementById('bath4RunTime').value = settings.Greenhouse1.bath4.runTime;
             document.getElementById('bath4RunTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath4.runTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath4.runTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('bath4PauseTime').value = settings.Greenhouse_1.bath4.pauseTime;
+            document.getElementById('bath4PauseTime').value = settings.Greenhouse1.bath4.pauseTime;
             document.getElementById('bath4PauseTime').addEventListener('input', (event) => {
-                settings.Greenhouse_1.bath4.pauseTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.bath4.pauseTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('temperatureFanMinTemp').value = settings.Greenhouse_1.temperatureFan.minTime;
+            document.getElementById('temperatureFanMinTemp').value = settings.Greenhouse1.temperatureFan.minTime;
             document.getElementById('temperatureFanMinTemp').addEventListener('input', (event) => {
-                settings.Greenhouse_1.temperatureFan.minTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.temperatureFan.minTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('temperatureFanMaxTemp').value = settings.Greenhouse_1.temperatureFan.maxTime;
+            document.getElementById('temperatureFanMaxTemp').value = settings.Greenhouse1.temperatureFan.maxTime;
             document.getElementById('temperatureFanMaxTemp').addEventListener('input', (event) => {
-                settings.Greenhouse_1.temperatureFan.maxTime = Number(event.target.value);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.temperatureFan.maxTime = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('lightGrowOnTime').value = settings.Greenhouse_1.lightGrow.onTime;
+            document.getElementById('lightGrowOnTime').value = settings.Greenhouse1.lightGrow.onTime;
             document.getElementById('lightGrowOnTime').addEventListener('change', (event) => {
-                settings.Greenhouse_1.lightGrow.onTime = event.target.value;
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.lightGrow.onTime = event.target.value;
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            document.getElementById('lightGrowOffTime').value = settings.Greenhouse_1.lightGrow.offTime;
+            document.getElementById('lightGrowOffTime').value = settings.Greenhouse1.lightGrow.offTime;
             document.getElementById('lightGrowOffTime').addEventListener('change', (event) => {
-                settings.Greenhouse_1.lightGrow.offTime = event.target.value;
-                // console.log('Updated lightGrow.offTime:', settings.Greenhouse_1.lightGrow.offTime);
-                console.log('Updated settings:', settings.Greenhouse_1);
+                settings.Greenhouse1.lightGrow.offTime = event.target.value;
+                // console.log('Updated lightGrow.offTime:', settings.Greenhouse1.lightGrow.offTime);
+                console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
