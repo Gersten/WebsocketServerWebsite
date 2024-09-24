@@ -242,12 +242,16 @@
                     pauseTime: 0
                 },
                 temperatureFan: {
-                    minTime: 0,
-                    maxTime: 0
+                    minTemp: 0,
+                    maxTemp: 0
                 },
                 lightGrow: {
                     onTime: "00:00",
                     offTime: "00:00"
+                },
+                temperatureShade: {
+                    closeTemp: 0,
+                    openTemp: 0
                 }
             },
             Greenhouse2: {},
@@ -316,16 +320,16 @@
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureFanMinTemp').value = settings.Greenhouse1.temperatureFan.minTime;}catch{}
+            try{document.getElementById('temperatureFanMinTemp').value = settings.Greenhouse1.temperatureFan.minTemp;}catch{}
             document.getElementById('temperatureFanMinTemp').addEventListener('input', (event) => {
-                settings.Greenhouse1.temperatureFan.minTime = Number(event.target.value);
+                settings.Greenhouse1.temperatureFan.minTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureFanMaxTemp').value = settings.Greenhouse1.temperatureFan.maxTime;}catch{}
+            try{document.getElementById('temperatureFanMaxTemp').value = settings.Greenhouse1.temperatureFan.maxTemp;}catch{}
             document.getElementById('temperatureFanMaxTemp').addEventListener('input', (event) => {
-                settings.Greenhouse1.temperatureFan.maxTime = Number(event.target.value);
+                settings.Greenhouse1.temperatureFan.maxTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
@@ -341,6 +345,20 @@
             document.getElementById('lightGrowOffTime').addEventListener('change', (event) => {
                 settings.Greenhouse1.lightGrow.offTime = event.target.value;
                 // console.log('Updated lightGrow.offTime:', settings.Greenhouse1.lightGrow.offTime);
+                console.log('Updated settings:', settings.Greenhouse1);
+                sendSettings();
+            });
+
+            try{document.getElementById('temperatureShadeCloseTemp').value = settings.Greenhouse1.temperatureShade.minTime;}catch{}
+            document.getElementById('temperatureShadeCloseTemp').addEventListener('input', (event) => {
+                settings.Greenhouse1.temperatureShade.closeTemp = Number(event.target.value);
+                console.log('Updated settings:', settings.Greenhouse1);
+                sendSettings();
+            });
+
+            try{document.getElementById('temperatureShadeOpenTemp').value = settings.Greenhouse1.temperatureShade.maxTime;}catch{}
+            document.getElementById('temperatureShadeOpenTemp').addEventListener('input', (event) => {
+                settings.Greenhouse1.temperatureShade.openTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
@@ -432,10 +450,18 @@
             <button class="start" onclick="sendMessage('Control', '1', '-1', 'open_shade')">Open</button>
             <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shade')">Close</button>
         </div>
+        <div class="input-fields">
+            <label for="temperatureShadeCloseTemp">Temp Close:</label>
+            <input type="number" id="temperatureShadeCloseTemp" placeholder="Minutes" min="0">
+        </div>
+        <div class="input-fields">
+            <label for="temperatureShadeOpenTemp">Temp Open:</label>
+            <input type="number" id="temperatureShadeOpenTemp" placeholder="Minutes" min="0">
+        </div>
     </div>
 
     <div class="category">
-        <h2>Light</h2>
+        <h2>Working Light</h2>
         <div class="button-container">
             <button class="start" onclick="sendMessage('Control', '1', '-1', 'light_on')">On</button>
             <button class="stop" onclick="sendMessage('Control', '1', '-1', 'light_off')">Off</button>
