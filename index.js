@@ -33,10 +33,11 @@ app.listen(port, () => {
 const clients = new Map();
 
 function sendPing() {
+  console.log(`# Sending Ping to clients to retrieve Sensor/Status Data`);
   wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
           const ip = clients.get(client);  // Get the stored IP for this client
-          console.log(`# Sending Ping to client at IP: ${ip}`);
+          // console.log(`# Sending Ping to client at IP: ${ip}`);
           client.ping();  // Send a ping
       }
   });

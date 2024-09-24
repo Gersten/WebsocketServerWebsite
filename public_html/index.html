@@ -476,12 +476,21 @@
             <button class="stop" onclick="sendMessage('Control', '1', '-1', 'stop_fan')">Stop</button>
         </div>
         <div class="input-fields">
-            <label for="temperatureFanMinTemp">Minimum Temp:</label>
+            <label for="temperatureFanMinTemp">Stop Fan Temp:</label>
             <input type="number" id="temperatureFanMinTemp" placeholder="Minutes" min="0">
         </div>
         <div class="input-fields">
-            <label for="temperatureFanMaxTemp">Maximum Temp:</label>
+            <label for="temperatureFanMaxTemp">Start Fan Temp:</label>
             <input type="number" id="temperatureFanMaxTemp" placeholder="Minutes" min="0">
+        </div>
+    </div>
+
+    <!-- Cooling Wall Settings -->
+    <div class="category">
+        <h2>Cooling Wall</h2>
+        <div class="button-container">
+            <button class="start" onclick="sendMessage('Control', '1', '-1', 'start_wall')">Start</button>
+            <button class="stop" onclick="sendMessage('Control', '1', '-1', 'stop_wall')">Stop</button>
         </div>
     </div>
 
