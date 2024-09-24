@@ -19,8 +19,8 @@
       "pauseTime": 15
     },
     "temperatureFan": {
-      "minTime": 25,
-      "maxTime": 30
+      "minTemp": 25,
+      "maxTemp": 30
     },
     "lightGrow": {
       "onTime": "20:00",
