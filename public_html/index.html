@@ -250,8 +250,8 @@
                     offTime: "00:00"
                 },
                 temperatureShade: {
-                    closeTemp: 0,
-                    openTemp: 0
+                    openTemp: 0,
+                    closeTemp: 0
                 }
             },
             Greenhouse2: {},
@@ -349,16 +349,16 @@
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureShadeCloseTemp').value = settings.Greenhouse1.temperatureShade.minTime;}catch{}
-            document.getElementById('temperatureShadeCloseTemp').addEventListener('input', (event) => {
-                settings.Greenhouse1.temperatureShade.closeTemp = Number(event.target.value);
+            try{document.getElementById('temperatureShadeOpenTemp').value = settings.Greenhouse1.temperatureShade.maxTime;}catch{}
+            document.getElementById('temperatureShadeOpenTemp').addEventListener('input', (event) => {
+                settings.Greenhouse1.temperatureShade.openTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureShadeOpenTemp').value = settings.Greenhouse1.temperatureShade.maxTime;}catch{}
-            document.getElementById('temperatureShadeOpenTemp').addEventListener('input', (event) => {
-                settings.Greenhouse1.temperatureShade.openTemp = Number(event.target.value);
+            try{document.getElementById('temperatureShadeCloseTemp').value = settings.Greenhouse1.temperatureShade.minTime;}catch{}
+            document.getElementById('temperatureShadeCloseTemp').addEventListener('input', (event) => {
+                settings.Greenhouse1.temperatureShade.closeTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
@@ -451,12 +451,12 @@
             <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shade')">Close</button>
         </div>
         <div class="input-fields">
-            <label for="temperatureShadeCloseTemp">Temp Close:</label>
-            <input type="number" id="temperatureShadeCloseTemp" placeholder="Minutes" min="0">
-        </div>
-        <div class="input-fields">
             <label for="temperatureShadeOpenTemp">Temp Open:</label>
             <input type="number" id="temperatureShadeOpenTemp" placeholder="Minutes" min="0">
+        </div>
+        <div class="input-fields">
+            <label for="temperatureShadeCloseTemp">Temp Close:</label>
+            <input type="number" id="temperatureShadeCloseTemp" placeholder="Minutes" min="0">
         </div>
     </div>
 

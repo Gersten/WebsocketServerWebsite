@@ -25,7 +25,11 @@
     "lightGrow": {
       "onTime": "20:00",
       "offTime": "05:00"
-    }
+    },
+    "temperatureShade": {
+      "openTemp": 0,
+      "closeTemp": 0
+  }
   },
   "Greenhouse2": {},
   "Greenhouse3": {},
