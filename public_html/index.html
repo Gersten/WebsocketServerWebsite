@@ -349,14 +349,14 @@
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureShadeOpenTemp').value = settings.Greenhouse1.temperatureShade.maxTime;}catch{}
+            try{document.getElementById('temperatureShadeOpenTemp').value = settings.Greenhouse1.temperatureShade.openTemp;}catch{}
             document.getElementById('temperatureShadeOpenTemp').addEventListener('input', (event) => {
                 settings.Greenhouse1.temperatureShade.openTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
                 sendSettings();
             });
 
-            try{document.getElementById('temperatureShadeCloseTemp').value = settings.Greenhouse1.temperatureShade.minTime;}catch{}
+            try{document.getElementById('temperatureShadeCloseTemp').value = settings.Greenhouse1.temperatureShade.closeTemp;}catch{}
             document.getElementById('temperatureShadeCloseTemp').addEventListener('input', (event) => {
                 settings.Greenhouse1.temperatureShade.closeTemp = Number(event.target.value);
                 console.log('Updated settings:', settings.Greenhouse1);
