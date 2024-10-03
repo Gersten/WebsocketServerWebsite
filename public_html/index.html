@@ -114,7 +114,8 @@
 
         function initWebSocket() {
             // ws = new WebSocket('ws://192.168.1.15:80/ws'); //arduino esp 
-            ws = new WebSocket('ws://192.168.1.20:3001/ws'); //nodejse
+            // ws = new WebSocket('ws://192.168.1.20:3001/ws'); //nodejse ezy
+            ws = new WebSocket('ws://192.168.1.89:3001/ws'); //nodejse farm
             // ws = new WebSocket('ws://127.0.0.1:3001/ws'); //nodejse windows pc testing
             ws.onopen = function() {
                 console.log('WebSocket connection opened');
@@ -137,12 +138,16 @@
                         updateFieldsValues();
                     }
                 }
-                if (data.Greenhouse === '1' && data.Type === 'Temperature') {
-                    document.getElementById('jsonData1').textContent = JSON.stringify(data.Sensors, null, 2);
+
+                if (data.Greenhouse === '1') {
+                    if(data.Type === 'Temperature') document.getElementById('jsonData1').textContent = JSON.stringify(data.Sensors, null, 2);
+                    if(data.Type === 'Bath' && data.Bath === '1') document.getElementById('jsonData1Bath').textContent = JSON.stringify(data.Sensors, null, 2);
+                    if(data.Type === 'Bath' && data.Bath === '2') document.getElementById('jsonData2Bath').textContent = JSON.stringify(data.Sensors, null, 2);
+                    if(data.Type === 'Bath' && data.Bath === '3') document.getElementById('jsonData3Bath').textContent = JSON.stringify(data.Sensors, null, 2);
+                    if(data.Type === 'Bath' && data.Bath === '4') document.getElementById('jsonData4Bath').textContent = JSON.stringify(data.Sensors, null, 2);
                 }
-                if (data.Greenhouse === '1' && data.Type === 'Bath' && data.Bath === '1') {
-                    document.getElementById('jsonData1Bath').textContent = JSON.stringify(data.Sensors, null, 2);
-                }
+                
+
             };
             ws.onclose = function() {
                 console.log('WebSocket connection closed');
