@@ -1,6 +1,6 @@
 {
   "Type": "Settings",
-  "Action": "",
+  "Action": "write",
   "Greenhouse1": {
     "bath1": {
       "runTime": 5,
@@ -11,7 +11,7 @@
       "pauseTime": 15
     },
     "bath3": {
-      "runTime": 5,
+      "runTime": 4,
       "pauseTime": 15
     },
     "bath4": {
@@ -19,7 +19,7 @@
       "pauseTime": 15
     },
     "temperatureFan": {
-      "minTemp": 25,
+      "minTemp": 27,
       "maxTemp": 30
     },
     "lightGrow": {
@@ -27,9 +27,9 @@
       "offTime": "05:00"
     },
     "temperatureShade": {
-      "openTemp": 0,
-      "closeTemp": 0
-  }
+      "openTemp": 26,
+      "closeTemp": 28
+    }
   },
   "Greenhouse2": {},
   "Greenhouse3": {},

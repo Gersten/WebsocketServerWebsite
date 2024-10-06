@@ -116,7 +116,7 @@
             // ws = new WebSocket('ws://192.168.1.15:80/ws'); //arduino esp 
             // ws = new WebSocket('ws://192.168.1.20:3001/ws'); //nodejse ezy
             ws = new WebSocket('ws://192.168.1.89:3001/ws'); //nodejse farm
-            // ws = new WebSocket('ws://127.0.0.1:3001/ws'); //nodejse windows pc testing
+            // ws = new WebSocket('ws://192.168.1.2:3001/ws'); //nodejse windows pc testing
             ws.onopen = function() {
                 console.log('WebSocket connection opened');
                 //identify as website
@@ -456,11 +456,11 @@
             <button class="stop" onclick="sendMessage('Control', '1', '-1', 'close_shade')">Close</button>
         </div>
         <div class="input-fields">
-            <label for="temperatureShadeOpenTemp">Temp Open:</label>
+            <label for="temperatureShadeOpenTemp">Temp COLD Open:</label>
             <input type="number" id="temperatureShadeOpenTemp" placeholder="Minutes" min="0">
         </div>
         <div class="input-fields">
-            <label for="temperatureShadeCloseTemp">Temp Close:</label>
+            <label for="temperatureShadeCloseTemp">Temp HOT Close:</label>
             <input type="number" id="temperatureShadeCloseTemp" placeholder="Minutes" min="0">
         </div>
     </div>
